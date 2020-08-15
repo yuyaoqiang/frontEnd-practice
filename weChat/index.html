@@ -5,139 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link rel="stylesheet" href="./icon/iconfont.css" />
-    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./css/common.css" />
+    <link rel="stylesheet" href="./css/index.css" />
+    <link rel="stylesheet" href="./css/chatInfo.css" />
+    <link rel="stylesheet" href="./css/chatGroup.css" />
   </head>
   <body>
-    <main id="container">
-       
-    </main>
+    <div id="container"></div>
   </body>
-  <script type="text/javascript" src="./pages.js"></script>
 
-  <script>
-    // 栈管理
-    class StackManagement {
-      constructor(page, domManage) {
-        this.list = [];
-        this.stackTop = page;
-        this.domManage = [];
-        this.init();
-      }
-
-      // 初始化
-      init() {
-        this.domManage = domManage;
-        this.push(this.stackTop);
-      }
-
-      // 进栈
-      push(page) {
-        let beforePage = this.stackTop;
-        this.stackTop = page;
-        this.list.push(page);
-        this.domManage.renderView(this.stackTop, "in", null);
-      }
-
-      // 出栈
-      pop() {
-        let page = this.list.pop();
-        this.getStackTop();
-        this.domManage.renderView(this.stackTop, "out", page);
-      }
-
-      // 栈顶
-      getStackTop() {
-        this.stackTop = this.list[this.list.length - 1];
-      }
-      // 监听进栈 出栈
-      listener(page) {
-        let hasPage = this.list.find((l) => l.url === page.url);
-        if (hasPage) {
-          this.pop();
-        } else {
-          this.push(page);
-        }
-      }
-
-      //销毁
-      destroy() {
-        this.list = null;
-      }
-    }
-
-    // DOM管理
-    class DomManagement {
-      // 创建DOM
-      createDom(templateStr) {
-        let parser = new DOMParser();
-        let doc = parser.parseFromString(templateStr, "text/html");
-        let div = doc.querySelector(".page");
-        return div;
-      }
-
-      // 获取DOM
-      getDomById(id) {
-        return document.getElementById(id) || false;
-      }
-
-      // 删除DOM
-      delDom(template) {
-        var parent = document.getElementById("container");
-        var child = document.querySelector(`#${template.url}`);
-        if (!child) return;
-        const className = child.getAttribute("class");
-        child.setAttribute(
-          "class",
-          `${className.replace(template["in"], template["out"])}`
-        );
-        setTimeout(() => {
-          if (child != null) parent.removeChild(child);
-        }, 700);
-      }
-
-      // 渲染
-      renderView(renderTemplate, direction, delDom) {
-        if (delDom) {
-          this.delDom(delDom);
-          return;
-        }
-        let template = this.createDom(renderTemplate.htmlContent);
-        let DOM = this.getDomById("container");
-        const className = template.getAttribute("class");
-        template.setAttribute(
-          "class",
-          `${className} ${renderTemplate[direction]}`
-        );
-        if (DOM) DOM.appendChild(template);
-      }
-    }
-
-    // history管理
-    class HistoryManagement {
-      // 当前页面url
-      static current() {
-        const hash = window.location.hash.slice(1);
-        const router = pages.find((page) => page.url === hash) || pages[0];
-        return router;
-      }
-
-      // 切换页面
-      static changePage(path) {
-        window.location.hash = path;
-      }
-    }
-
-    const nextPage = (path) => {
-      HistoryManagement.changePage(path);
-    };
-
+  <script type="module">
+    import pages from "./js/pages.js";
+    import Observer from "./js/observer.js";
+    import StackManagement from "./js/stackManagement.js";
+    import HistoryManagement from "./js/historyManagement.js";
+    import DomManagement from "./js/DomManagement.js";
+    
     const router = HistoryManagement.current();
-    const domManage = new DomManagement();
-    const stackMage = new StackManagement(router, domManage);
-
-    window.addEventListener("hashchange", function (e) {
-      const router = HistoryManagement.current();
-      if (router) stackMage.listener(router);
+    const stackManage = StackManagement.getStackInstance(router, DomManagement);
+    
+    observer.addListener("go", (info) => {
+      stackManage.push(info);
     });
+    observer.addListener("back", (info) => {
+      stackManage.pop();
+    });
+
+    window.onpopstate = (event) => {
+      const router = HistoryManagement.current();
+      let has = stackManage.urlMap.has(router.url);
+      if (has) {
+        observer.publish("back");
+      } else {
+        observer.publish("go", router);
+      }
+    };
+  </script>
+
+  <script type="text/javascript">
+    const nextPage = (path) => {
+      window.location.hash = path;
+    };
   </script>
 </html>
