@@ -11,7 +11,6 @@ class React {
     // 渲染
     render(page, direction, exitPage) {
         let template = this.domManage.createDom(page.htmlContent);
-        let DOM = this.domManage.query("container");
         if (exitPage) {
             var exitChild = document.querySelector(`#${exitPage.url}`);
             const className = exitChild.getAttribute("class");

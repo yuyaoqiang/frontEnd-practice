@@ -19,12 +19,12 @@
     import Observer from "./js/observer.js";
     import Router from "./js/router.js";
     import HistoryManagement from "./js/historyManagement.js";
-    import DomManagement from "./js/DomManagement.js";
+    import ReactDom from "./js/react-dom.js";
     import React from "./js/react.js";
-    const react = React.getInstance(DomManagement);
+    const react = React.getInstance(ReactDom);
     const router = Router.getRouterInstance(HistoryManagement.current(), react);
     const observer = new Observer(router);
-    
+
     window.onpopstate = (event) => {
       const route = HistoryManagement.current();
       let has = router.urlMap.has(route.url);

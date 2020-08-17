@@ -1,10 +1,10 @@
-class DomManagement {
+class ReactDom {
 
   constructor() {
-    if (!DomManagement.instance) {
-      DomManagement.instance = this;
+    if (!ReactDom.instance) {
+      ReactDom.instance = this;
     }
-    return DomManagement.instance;
+    return ReactDom.instance;
   }
 
   // 创建DOM
@@ -35,4 +35,4 @@ class DomManagement {
     if (DOM) DOM.appendChild(template);
   }
 }
-export default DomManagement;
+export default ReactDom;
