@@ -15,25 +15,8 @@
   </body>
 
   <script type="module">
-    import pages from "./js/pages.js";
-    import Observer from "./js/observer.js";
-    import Router from "./js/router.js";
-    import HistoryManagement from "./js/historyManagement.js";
-    import ReactDom from "./js/react-dom.js";
-    import React from "./js/react.js";
-    const react = React.getInstance(ReactDom);
-    const router = Router.getRouterInstance(HistoryManagement.current(), react);
-    const observer = new Observer(router);
-
-    window.onpopstate = (event) => {
-      const route = HistoryManagement.current();
-      let has = router.urlMap.has(route.url);
-      if (has) {
-        observer.publish("back");
-      } else {
-        observer.publish("go", route);
-      }
-    };
+    import router from "./js/router.js";
+    router.init();
   </script>
 
   <script type="text/javascript">

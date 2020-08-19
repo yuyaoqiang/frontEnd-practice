@@ -1,5 +1,4 @@
 class ReactDom {
-
   constructor() {
     if (!ReactDom.instance) {
       ReactDom.instance = this;
@@ -35,4 +34,5 @@ class ReactDom {
     if (DOM) DOM.appendChild(template);
   }
 }
-export default ReactDom;
+const reactDom = new ReactDom();
+export default reactDom;

@@ -1,58 +1,77 @@
-// 栈管理
-class Router {
 
-  constructor(page, react) {
-    this.len = 0; //栈长度
-    this.stack = {}; //栈
-    this.urlMap = new Map(); //url映射关系
-    this.react = react;
-    this.init(page);
+import templates from "./templates.js"
+import routerConfig from "./routerConfig.js"
+import Stack from "./stack.js";
+import Page from "./page.js";
+import observer from "./observer.js";
+
+class Router {
+  constructor() {
+    this.stack = Stack.getStackInstance();
   }
 
-  static getRouterInstance(page, react) {
-    if (!this.instance) {
-      this.instance = new Router(page, react);
-    }
-    return this.instance;
+  // 路由中是否已存在
+  hasPathByStack() {
+    let path = this.getPath();
+    let stacks = this.stack.getStacks();
+    const index = stacks.findIndex(stack => stack.path === path)
+    return index === -1 ? false : true;
+  }
+
+  // 获取当前页面
+  getPage() {
+    let page = null;
+    let path = this.getPath();
+    routerConfig.map(route => {
+      if (route.path === path) {
+        let templatePage = templates[route.key];
+        page = new Page(route.path, route.title, templatePage);
+      }
+    })
+    return page;
+  }
+
+  // 当前Path
+  getPath() {
+    return window.location.hash.slice(1) || 'index';
+  }
+
+  //第一次初始化页面
+  fristInitPage() {
+    if (this.stack.len > 0) return;
+    let page = this.getPage();
+    this.stack.push(page);
+    page.renderPage();
   }
 
   // 初始化
-  init(page) {
-    this.clean();
-    this.push(page);
+  init() {
+    this.fristInitPage();
+    this.addObserver();
   }
 
-  // 栈顶
-  getStackTop() {
-    return this.stack[this.len];
-  }
+  addObserver() {
+    window.onpopstate = () => {
+      const has = this.hasPathByStack();
+      if (has) {
+        observer.publish("back");
+      } else {
+        observer.publish("go");
 
-  // 进栈
-  push(page) {
-    this.len += 1;
-    this.stack[this.len] = page;
-    this.urlMap.set(page.url, this.len);
-    const stackTopData = this.getStackTop();
-    this.react.render(stackTopData, "in", null);
-  }
+      }
+    };
 
-  // 出栈
-  pop() {
-    const beforeData = this.getStackTop();
-    this.urlMap.delete(beforeData.url);
-    delete this.stack[this.len];
-    this.len -= 1;
-    const cureentData = this.getStackTop();
-    this.react.render(cureentData, "out", beforeData);
-  }
+    observer.addListener("go", () => {
+      let page = this.getPage();
+      this.stack.push(page)
+      page.renderPage();
+    });
 
-  //销毁
-  clean() {
-    this.len = 0;
-    this.stack = {};
-    this.urlMap.clear();
+    observer.addListener("back", () => {
+      let page = this.stack.pop();
+      page.destroyPage();
+    });
   }
-
 }
-
-export default Router;
+const router = new Router();
+export default router;

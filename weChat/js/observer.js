@@ -1,16 +1,9 @@
 // 发布订阅者模式
 class Observer {
-    constructor(stackManage) {
+    constructor() {
         this.messageMap = {};
         if (!Observer.instance) {
             Observer.instance = this;
-            Observer.instance.addListener("go", (info) => {
-                stackManage.push(info);
-            });
-
-            Observer.instance.addListener("back", (info) => {
-                stackManage.pop();
-            });
         }
         return Observer.instance
     }
@@ -30,6 +23,6 @@ class Observer {
         const subscribes = this.messageMap[message];
         subscribes.forEach((subscribe) => subscribe(info));
     }
-}
-
-export default Observer;
+} 
+const observer = new Observer()
+export default observer;
