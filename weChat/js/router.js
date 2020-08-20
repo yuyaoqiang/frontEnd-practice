@@ -38,7 +38,8 @@ class Router {
 
   //第一次初始化页面
   fristInitPage() {
-    if (this.stack.len > 0) return;
+    
+    if (this.stack.size() > 0) return;
     let page = this.getPage();
     this.stack.push(page);
     page.renderPage();
