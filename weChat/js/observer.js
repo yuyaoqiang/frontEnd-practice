@@ -23,6 +23,6 @@ class Observer {
         const subscribes = this.messageMap[message];
         subscribes.forEach((subscribe) => subscribe(info));
     }
-} 
-const observer = new Observer()
+}
+const observer = new Observer();
 export default observer;

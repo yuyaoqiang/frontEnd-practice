@@ -1,26 +1,33 @@
-import reactDom from "./reactDom.js";
+import docUtils from "./docUtils.js";
 class Component {
-    static getInstance() {
-        if (!this.instance) {
-            this.instance = new Component();
-        }
-        return this.instance;
+    constructor(parent) {
+        this.parent = document.querySelector(parent);
+        this.template = '';
+        this.state = {};
     }
-    // 渲染
-    render(page) {
-        if (page.leave) {
-            var exitChild = document.querySelector(`#${page.path}`);
-            const className = exitChild.getAttribute("class");
-            exitChild.setAttribute(
-                "class",
-                `${className.replace('in-animation', 'out-animation')}`
-            );
-            reactDom.delete(exitChild);
+
+    destory(animationOut) {
+        const templateDom = this.parent.lastChild;
+        if (animationOut) {
+            templateDom.addEventListener("animationend", () => {
+                this.parent.removeChild(templateDom)
+            });
+            const classas = templateDom.getAttribute("class");
+            templateDom.setAttribute("class", `${classas} out-animation`);
         } else {
-            let template = reactDom.createDom(page.tepmlate);
-            const className = template.getAttribute("class");
-            template.setAttribute("class", `${className} in-animation`);
-            reactDom.appendChild(template);
+            this.parent.removeChild(templateDom)
+        }
+    }
+
+    // 渲染
+    render(animationIn) {
+        let templateDom = docUtils.createDom(this.template);
+        if (animationIn) {
+            const classas = templateDom.getAttribute("class");
+            templateDom.setAttribute("class", `${classas} in-animation`);
+            this.parent.appendChild(templateDom)
+        } else {
+            this.parent.appendChild(templateDom)
         }
     }
 }

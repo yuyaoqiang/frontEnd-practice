@@ -1,13 +1,6 @@
-class ReactDom {
-  constructor() {
-    if (!ReactDom.instance) {
-      ReactDom.instance = this;
-    }
-    return ReactDom.instance;
-  }
-
+class docUtils {
   // 创建DOM
-  createDom(templateStr) {
+  static createDom(templateStr) {
     let parser = new DOMParser();
     let doc = parser.parseFromString(templateStr, "text/html");
     let dom = doc.querySelector(".page");
@@ -15,12 +8,12 @@ class ReactDom {
   }
 
   // 查询DOM
-  query(id) {
+  static query(id) {
     return document.getElementById(id) || false;
   }
 
   // 删除DOM
-  delete(template) {
+  static delete(template) {
     if (!template) return;
     var parent = document.getElementById("container");
     setTimeout(() => {
@@ -29,10 +22,9 @@ class ReactDom {
   }
 
   // 添加DOM
-  appendChild(template) {
+  static appendChild(template) {
     let DOM = this.query("container");
     if (DOM) DOM.appendChild(template);
   }
 }
-const reactDom = new ReactDom();
-export default reactDom;
+export default docUtils;

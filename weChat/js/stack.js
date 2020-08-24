@@ -23,6 +23,11 @@ var Stack = (function () {
             return this[stack][size];
         }
 
+        // 是否存在某个元素
+        hasEqual(cb){
+            cb(this[stack]);
+        }
+
         // 获取栈中所有数据
         getStacks() {
             let result = [];
