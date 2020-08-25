@@ -14,6 +14,7 @@ class Navigation {
 
     go(path) {
         const page = new this.config[path].component('#container');
+        page.compile();
         page.render('in');
         this.stack.push({
             title: page.title,

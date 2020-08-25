@@ -7,31 +7,30 @@ class Component {
     }
 
     compile() {
-        this.template = template(this.path, this.state);
+        let templateHtml = template(this.path, this.state);
+        this.template = docUtils.createDom(templateHtml);
     }
 
     destory(animationOut) {
-        const templateDom = this.parent.lastChild;
         if (animationOut) {
-            templateDom.addEventListener("animationend", () => {
-                this.parent.removeChild(templateDom)
+            this.template.addEventListener("animationend", () => {
+                this.parent.removeChild(this.template)
             });
-            const classas = templateDom.getAttribute("class");
-            templateDom.setAttribute("class", `${classas} out-animation`);
+            const classas = this.template.getAttribute("class");
+            this.template.setAttribute("class", `${classas} out-animation`);
         } else {
-            this.parent.removeChild(templateDom)
+            this.parent.removeChild(this.template)
         }
     }
 
     // 渲染
     render(animationIn) {
-        let templateDom = docUtils.createDom(this.template);
         if (animationIn) {
-            const classas = templateDom.getAttribute("class");
-            templateDom.setAttribute("class", `${classas} in-animation`);
-            this.parent.appendChild(templateDom)
+            const classas = this.template.getAttribute("class");
+            this.template.setAttribute("class", `${classas} in-animation`);
+            this.parent.appendChild(this.template)
         } else {
-            this.parent.appendChild(templateDom)
+            this.parent.appendChild(this.template)
         }
     }
 }
