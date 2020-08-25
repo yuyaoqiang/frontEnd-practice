@@ -5,6 +5,7 @@ class Home extends Component {
         this.path = 'home'
         this.state = {
             title: "微信",
+            list:['这波能反杀','这波能反杀','这波能反杀','这波能反杀','这波能反杀','这波能反杀','这波能反杀','这波能反杀','这波能反杀','这波能反杀',]
         };
     }
 }

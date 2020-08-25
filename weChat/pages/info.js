@@ -5,6 +5,22 @@ class Info extends Component {
     this.path = 'info'
     this.state = {
       title: "聊天信息(345)",
+      list:[
+        {userName:'不知非攻'},
+        {userName:'不知非攻'},
+        {userName:'不知非攻'},
+        {userName:'不知非攻'},
+        {userName:'不知非攻'},
+        {userName:'不知非攻'},
+        {userName:'不知非攻'},
+        {userName:'不知非攻'},
+        {userName:'不知非攻'},
+        {userName:'不知非攻'},
+        {userName:'不知非攻'},
+        {userName:'不知非攻'},
+        {userName:'不知非攻'},
+        {userName:'不知非攻'},
+      ]
     };
   }
 }
