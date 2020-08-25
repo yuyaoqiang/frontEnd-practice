@@ -6,6 +6,10 @@ class Component {
         this.state = {};
     }
 
+    compile() {
+        this.template = template(this.path, this.state);
+    }
+
     destory(animationOut) {
         const templateDom = this.parent.lastChild;
         if (animationOut) {
