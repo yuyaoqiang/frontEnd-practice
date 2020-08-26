@@ -32,6 +32,7 @@ ul > li {
   height: 100%;
   overflow: hidden;
   background: #ececec;
+  border: 1px solid #ececec;
   position: relative;
 }
 .page1 {
@@ -39,7 +40,7 @@ ul > li {
   background: rgb(77, 170, 73);
 }
 .chat-page {
-  position: fixed;
+  position: absolute;
   display: flex;
   flex-direction: column;
   width: 100%;
