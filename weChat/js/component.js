@@ -1,4 +1,5 @@
 import docUtils from "../util/docUtils.js";
+import {changePage} from "../util/utils.js"
 class Component {
 		constructor({parent,next,before}) {
 				this.parent = document.querySelector(parent);
@@ -28,8 +29,7 @@ class Component {
 		// 渲染
 		render(animationIn) {
 				let node = docUtils.createDom(this.template);
-				 const nodes = node.getElementsByClassName('next');
-				 console.log(nodes)
+				this.bindEvents(node);
 				if (animationIn) {
 						const classas = node.getAttribute("class");
 						node.setAttribute("class", `${classas} in-animation`);
@@ -37,20 +37,17 @@ class Component {
 				} else {
 						this.parent.appendChild(node);
 				}
-				// this.bindEvents();
 		}
 
-		nextPage() {
-    		window.location.hash = this.next;
-		};
-
-		beforePage(){
-				window.location.hash = this.before;
-		}
-
-		bindEvents(){
-				if(this.next) this.nextPage();
-				if(this.before) this.beforePage()
+		bindEvents(parent){
+				const nextNodes = parent.getElementsByClassName('next');
+				const beforeNodes = parent.getElementsByClassName('before');
+				for(let i=0; i<nextNodes.length; i++){
+					nextNodes[i].addEventListener("click", ()=>{changePage(this.next)}, false)
+				 }
+				for(let i=0; i<beforeNodes.length; i++){
+					beforeNodes[i].addEventListener("click", ()=>{changePage(this.before)}, false)
+			 }
 		}
 }
 

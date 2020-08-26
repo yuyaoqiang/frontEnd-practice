@@ -26,7 +26,7 @@
       <main class="chat-main-wrap" id="chat-main-wrap">
         <ul>
           {{each list as value i}}
-          <li onclick="nextPage('chat')" class="row next">
+          <li class="row next">
             <span class="user-icon"> <img src="./icon/icon.jpeg" alt="" /> </span
             ><span class="user-name">{{value}}{{i}}</span>
           </li>
@@ -61,11 +61,11 @@
     <div class="page chat-page chat-info-page" id="chatInfo">
       <header>
           <ul class="info-header">
-              <li onclick="nextPage('home')">
+              <li class="before">
               <span class="icon iconfont icon-zuo"></span>
               </li>
               <li>{{title}}</li>
-              <li onclick="nextPage('info')"> <span class="icon iconfont icon-elipsis"></span></li>
+              <li class="next"> <span class="icon iconfont icon-elipsis"></span></li>
           </ul>
       </header>
       <main class="chat-main-wrap chats-info-wrap" id="chat-main-wrap">
@@ -92,7 +92,7 @@
     <div class="page chat-page" id="groupInfo">
       <header>
         <ul class="info-header">
-          <li onclick="nextPage('chat')">
+          <li class="before">
             <span class="icon iconfont icon-zuo"></span>
           </li>
           <li>{{title}}</li>

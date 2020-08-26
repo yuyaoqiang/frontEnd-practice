@@ -3,12 +3,13 @@ class Navigation {
     constructor(config) {
         this.stack = new Stack();
         this.config = config;
-    }
+		}
+		
     go(currentPath) {
 				const {component,...rest} = this.config[currentPath];
         const page = new component(
 						{
-							parent:'#container',...rest
+							  parent:'#container',...rest
 						}
 				);
         page.render('in');

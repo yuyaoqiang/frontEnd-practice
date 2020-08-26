@@ -1,7 +1,7 @@
 import Component from "../js/component.js"
 class Info extends Component {
-	constructor({parent,title,path}) {
-				super(parent);
+	constructor({parent,title,path,...rest}) {
+				super({parent,...rest});
 				this.path = path;
 				this.state = {
 						title,
