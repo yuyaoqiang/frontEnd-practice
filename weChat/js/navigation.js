@@ -1,32 +1,34 @@
 import Stack from "./stack.js"
-import config from "./config.js"
 class Navigation {
     constructor(config) {
         this.stack = new Stack();
         this.config = config;
     }
-    static getInstance(config) {
-        if (!this.instance) {
-            this.instance = new Navigation(config);
-        }
-        return this.instance;
-    }
-
-    go(path) {
-        const page = new this.config[path].component('#container');
-        page.compile();
+    go(currentPath) {
+				const {component,...rest} = this.config[currentPath];
+        const page = new component(
+						{
+							parent:'#container',...rest
+						}
+				);
         page.render('in');
-        this.stack.push({
-            title: page.title,
-            path,
-            component: page,
-        });
+        this.stack.push(page);
     }
 
     back() {
         const node = this.stack.pop();
-        node.component.destory('out');
-    }
+        node.destory('out');
+		}
+		
+		// 栈中是否已存在
+	  isHas = (path) => {
+				let has = false;
+				this.stack.hasEqual((stack) => {
+						const index = Object.keys(stack).findIndex(s => stack[s].path === path);
+						has = index === -1 ? false : true;
+				})
+		return has;
 }
-const navigator = Navigation.getInstance(config);
-export default navigator;
+}
+
+export default Navigation;

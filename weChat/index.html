@@ -26,7 +26,7 @@
       <main class="chat-main-wrap" id="chat-main-wrap">
         <ul>
           {{each list as value i}}
-          <li onclick="nextPage('chat')" class="row">
+          <li onclick="nextPage('chat')" class="row next">
             <span class="user-icon"> <img src="./icon/icon.jpeg" alt="" /> </span
             ><span class="user-name">{{value}}{{i}}</span>
           </li>
@@ -193,9 +193,4 @@
     init();
   </script>
 
-  <script type="text/javascript">
-    const nextPage = (path) => {
-      window.location.hash = path;
-    };
-  </script>
 </html>
