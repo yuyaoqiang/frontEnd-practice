@@ -1,7 +1,7 @@
 
 import Navigator from "./navigation.js";
 import observer from "./observer.js";
-import config from "./config.js"
+import config from "../config/config.js"
 import {getPath} from "../util/utils.js"
 
 
