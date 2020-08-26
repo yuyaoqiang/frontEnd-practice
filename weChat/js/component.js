@@ -9,7 +9,7 @@ class Component {
 				this.template = undefined;
 		}
 
-		compile(templateId,state) {
+		compile() {
 				this.template = template(this.path,this.state);
 		}
 
