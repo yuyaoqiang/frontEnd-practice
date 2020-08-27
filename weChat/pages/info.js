@@ -1,10 +1,11 @@
 import Component from "../js/component.js"
 class Info extends Component {
-	constructor({parent,title,path,...rest}) {
-				super({parent,...rest});
-				this.path = path;
+    constructor(parent) {
+        super(parent);
+        this.path = 'info';
+        this.title = "聊天信息(345)"
 				this.state = {
-						title,
+					  title: "聊天信息(345)",
 						list:[
 								{userName:'不知非攻'},
 								{userName:'不知非攻'},

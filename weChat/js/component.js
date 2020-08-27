@@ -1,11 +1,8 @@
 import docUtils from "../util/docUtils.js";
-import {changePage} from "../util/utils.js"
 class Component {
-		constructor({parent,next,before}) {
+		constructor(parent) {
 				this.parent = document.querySelector(parent);
 				this.state = {};
-				this.next=next,
-				this.before=before,
 				this.template = undefined;
 		}
 
@@ -36,18 +33,6 @@ class Component {
 						this.parent.appendChild(node);
 				} else {
 						this.parent.appendChild(node);
-				}
-		}
-
-		bindClickEvents(parent){
-				const nextNodes = parent.getElementsByClassName('next');
-				const beforeNodes = parent.getElementsByClassName('before');
-				if(beforeNodes.length>0){
-						beforeNodes[0].addEventListener("click", ()=>{changePage(this.before)}, false)
-				}
-				//** 后期可优化 事件委派 */
-				for(let i=0; i<nextNodes.length; i++){
-						nextNodes[i].addEventListener("click", ()=>{changePage(this.next)}, false)
 				}
 		}
 }

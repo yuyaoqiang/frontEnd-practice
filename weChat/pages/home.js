@@ -1,10 +1,12 @@
 import Component from "../js/component.js"
+import Navigator from "../js/navigation.js";
 class Home extends Component {
-		constructor({parent,title,path,...rest}) {
-				super({parent,...rest});
-        this.path = path
+    constructor(parent) {
+        super(parent);
+        this.path = 'home';
+        this.title = "微信"
         this.state = {
-            title,
+            title: "微信",
             list:[
                 '这波能反杀',
                 '这波能反杀',
@@ -24,6 +26,14 @@ class Home extends Component {
             ]
 				};
 				this.compile();
-    }
+		}
+		
+		bindClickEvents(parent){
+			  let navigator = 	Navigator.getInstance();
+				const nextNodes = parent.getElementsByClassName('next');
+				for(let i=0; i<nextNodes.length; i++){
+						nextNodes[i].addEventListener("click", ()=>{navigator.toDestination('chat')}, false)
+				}
+		}
 }
 export default Home;

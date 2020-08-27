@@ -8,23 +8,17 @@ const config = {
 				path: 'home',
 				title: '微信',
 				component: Home,
-				next:'chat',
-				before:''
 
 		},
 		chat: {
 				path: 'chat',
 				title: '闲聊群',
 				component: Chat,
-				next:'info',
-				before:'home'
 		},
 		info: {
 				path: 'info',
 				title: '闲聊群',
 				component: Info,
-				next:'',
-				before:'chat'
 		}
 }
 
