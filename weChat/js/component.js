@@ -6,8 +6,8 @@ class Component {
 				this.template = undefined;
 		}
 
-		compile() {
-				this.template = template(this.path,this.state);
+		compile(templateId,states) {
+				this.template = template(templateId,states);
 		}
 
 		destory(animationOut) {
@@ -23,10 +23,8 @@ class Component {
 				}
 		}
 
-		// 渲染
 		render(animationIn) {
 				let node = docUtils.createDom(this.template);
-				this.bindClickEvents(node);
 				if (animationIn) {
 						const classas = node.getAttribute("class");
 						node.setAttribute("class", `${classas} in-animation`);
@@ -34,6 +32,7 @@ class Component {
 				} else {
 						this.parent.appendChild(node);
 				}
+				this.bindClickEvents(node);
 		}
 }
 

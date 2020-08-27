@@ -4,7 +4,8 @@ class Home extends Component {
     constructor(parent) {
         super(parent);
         this.path = 'home';
-        this.title = "微信"
+				this.title = "微信"
+				this.templateId = "home";
         this.state = {
             title: "微信",
             list:[
@@ -25,7 +26,7 @@ class Home extends Component {
                 '这波能反杀',
             ]
 				};
-				this.compile();
+				this.compile(this.templateId,this.state);
 		}
 		
 		bindClickEvents(parent){

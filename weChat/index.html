@@ -192,8 +192,7 @@
     import Navigation from "./js/navigation.js";
     import observer from "./js/observer.js";
     import config from "./config/config.js";
-    const navigator =  Navigation.init(config);
-    console.log(navigator)
-          navigator.addEventListener();
+    const navigator =  Navigation.getInstance(config);
+          navigator.init();
 </script>
 </html>

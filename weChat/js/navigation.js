@@ -3,23 +3,30 @@ import observer from "./observer.js";
 import {getPath,changePage} from "../util/utils.js"
 class Navigation {
     constructor(config) {
-        this.stack = new Stack();
+				this.stack = new Stack();
+				this.observer = observer;
         this.config = config;
 		}
 
-		static	init(config){
+		static	getInstance(config){
 				if(!this.instance){
 						if(!config) throw Error("缺少配置文件");
 						this.instance = new Navigation(config);
 				}
 				return this.instance;
 		}
+		
+		init(){
+				this.addOnPopstate();
+				this.addListeners();
+				this.create(getPath());
+		}
 
 		create(path){
-			const { component } = this.config[path];
-			const page = new component('#container');
-			this.stack.push(page);
-			page.render('in');
+				const { component } = this.config[path];
+				const page = new component('#container');
+				this.stack.push(page);
+				page.render('in');
 		}
 
 		delele(){
@@ -28,8 +35,7 @@ class Navigation {
 		}
 
 		toDestination(currentPath){
-			const path = getPath();
-			changePage(currentPath || path);
+				changePage(currentPath);
 		}
 
 	  isHas(path){
@@ -41,24 +47,25 @@ class Navigation {
 				return has;
 		}
 
-		addEventListener(){
-			observer.addListener("go", (path) => {
-				this.create(path);
-			});
-			observer.addListener("back", () => {
-					this.delele();
-			});
+		addListeners(){
+				this.observer.addListener("go", (path) => {
+						this.create(path);
+				});
+				this.observer.addListener("back", () => {
+						this.delele();
+				});
+		}
 
-			window.onpopstate = () => {
-				const path = getPath();
-				const has = this.isHas(path);
-				if (has) {
-						observer.publish("back");
-				} else {
-						observer.publish("go",path);
-				}
-			};
-
+		addOnPopstate(){
+				window.onpopstate = () => {
+						const path = getPath();
+						const has = this.isHas(path);
+						if (has) {
+								observer.publish("back");
+						} else {
+								observer.publish("go",path);
+						}
+				};
 		}
 }
 
