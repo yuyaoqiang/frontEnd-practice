@@ -1,11 +1,9 @@
 import Stack from "./stack.js"
-import observer from "./observer.js";
 import {getPath,changePage} from "../util/utils.js"
 class Navigation {
 		constructor(config) {
 		this.stack = new Stack();
-		this.observer = observer;
-				this.config = config;
+		this.config = config;
 	}
 
 		static	getInstance(config){
@@ -17,25 +15,23 @@ class Navigation {
 		}
 		
 		init(){
-				this.addOnPopstate();
-				this.addListeners();
-				this.create(getPath());
+				const path = getPath();
+				this.go(path);
 		}
 
-		create(path){
+		go(path){
 				const { component } = this.config[path];
 				const page = new component('#container');
 				this.stack.push(page);
 				page.render('in');
+				window.wx = page;
 		}
 
-		delele(){
+		back(){
 				const node = this.stack.pop();
+				const page = this.stack.getStackTop();
 				node.destory('out');
-		}
-
-		toDestination(currentPath){
-				changePage(currentPath);
+				window.wx = page;
 		}
 
 		isHas(path){
@@ -45,27 +41,6 @@ class Navigation {
 						has = index === -1 ? false : true;
 				})
 				return has;
-		}
-
-		addListeners(){
-				this.observer.addListener("go", (path) => {
-						this.create(path);
-				});
-				this.observer.addListener("back", () => {
-						this.delele();
-				});
-		}
-
-		addOnPopstate(){
-				window.onpopstate = () => {
-						const path = getPath();
-						const has = this.isHas(path);
-						if (has) {
-								observer.publish("back");
-						} else {
-								observer.publish("go",path);
-						}
-				};
 		}
 }
 
