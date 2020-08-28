@@ -2,11 +2,11 @@ import Stack from "./stack.js"
 import observer from "./observer.js";
 import {getPath,changePage} from "../util/utils.js"
 class Navigation {
-    constructor(config) {
-				this.stack = new Stack();
-				this.observer = observer;
-        this.config = config;
-		}
+		constructor(config) {
+		this.stack = new Stack();
+		this.observer = observer;
+				this.config = config;
+	}
 
 		static	getInstance(config){
 				if(!this.instance){
@@ -38,7 +38,7 @@ class Navigation {
 				changePage(currentPath);
 		}
 
-	  isHas(path){
+		isHas(path){
 				let has = false;
 				this.stack.hasEqual((stack) => {
 						const index = Object.keys(stack).findIndex(s => stack[s].path === path);

@@ -18,9 +18,9 @@ class Chat extends Component {
 				};
 				this.compile(this.templateId,this.state);
 		}
-		
+
 		bindClickEvents(parent){
-			  let navigator = 	Navigator.getInstance();
+				let navigator = 	Navigator.getInstance();
 				const nextNodes = parent.getElementsByClassName('next');
 				const beforeNodes = parent.getElementsByClassName('before');
 				if(beforeNodes.length>0){
