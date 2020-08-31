@@ -20,25 +20,55 @@
     import observer from "./js/observer.js";
     import config from "./config/config.js";
     import {getPath} from "./util/utils.js";
-    const navigator =  Navigation.getInstance(config);
-				window.onpopstate = () => {
-						const path = getPath();
-						const has = navigator.isHas(path);
-						if (has) {
-								observer.publish("back");
-						} else {
-								observer.publish("go",path);
-						}
-				};
-				function addListeners(){
-						observer.addListener("go", (path) => {
-								navigator.go(path);
-						});
-						observer.addListener("back", () => {
-								navigator.back();
-						});
-				}
-				addListeners();
-    navigator.init();
+				const navigator =  Navigation.getInstance(config);
+				navigator.init();
+			 const historyPulishEventer=(()=>{
+					const publiser = observer;
+					return (key)=>{
+							if(key==='pulishPush'){
+									return function (...args) {
+											const [state,title,path] = args
+											observer.publish('listenerPush',path);
+											window.history.pushState(state,title,path)
+									}
+							}
+							if(key==='pulishPop'){
+								return function () {
+											window.history.back()
+											observer.publish('listenerPop',);
+									}
+							}
+					}
+				})();
+
+				const historyListenerEventer=(()=>{
+					const listener = observer;
+					return (key)=>{
+							if(key==='listenerPush'){
+										return (callback)=>{
+											listener.addListener('listenerPush',callback);
+										}
+							}
+							if(key==='listenerPop'){
+									return (callback)=>{
+											listener.addListener('listenerPop',callback);
+									}
+							}
+					}
+				})();
+		
+				window.addGoEventListener = historyListenerEventer('listenerPush');
+				window.addBackEventListener = historyListenerEventer('listenerPop');
+
+				window.addGoEventListener((path)=>{
+						navigator.go(path);
+				})
+				window.addBackEventListener(()=>{
+						navigator.back();
+				})
+
+				history.push = historyPulishEventer('pulishPush');
+				history.myBack = historyPulishEventer('pulishPop');
+		
 </script>
 </html>

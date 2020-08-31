@@ -51,11 +51,11 @@ class Chat extends Component {
 		}
 
 		go(){
-				changePage('info');
+				history.push({state:'info'},'','info')
 		}
 
 		back(){
-				history.back();
+				history.myBack();
 		}
 }
 

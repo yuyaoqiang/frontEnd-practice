@@ -127,8 +127,8 @@ class Info extends Component {
 		}
 
 		back(){
-				history.back();
-		}
+			history.myBack();
+	}
 }
 
 export default Info

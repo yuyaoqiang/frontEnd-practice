@@ -74,7 +74,7 @@ class Home extends Component {
 		}
 
 		go(){
-				changePage('chat')
+				history.push({state:'chat'},'','chat')
 		}
 
 }
