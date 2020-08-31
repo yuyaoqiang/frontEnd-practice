@@ -22,33 +22,36 @@
     import {getPath} from "./util/utils.js";
 				const navigator =  Navigation.getInstance(config);
 				navigator.init();
-			 const historyPulishEventer=(()=>{
-					const publiser = observer;
-					return (key)=>{
-							if(key==='pulishPush'){
+				
+				// 发布事件
+				const historyPulishEventer=(()=>{
+						const publiser = observer;
+						return (key)=>{
+								if(key==='pulishPush'){
+										return function (...args) {
+												const [state,title,path] = args
+												observer.publish('listenerPush',path);
+												window.history.pushState(state,title,path);
+										}
+								}
+								if(key==='pulishPop'){
 									return function (...args) {
-											const [state,title,path] = args
-											observer.publish('listenerPush',path);
-											window.history.pushState(state,title,path)
-									}
-							}
-							if(key==='pulishPop'){
-								return function () {
-											window.history.back()
-											observer.publish('listenerPop',);
-									}
-							}
+												window.history.back(...args);
+												observer.publish('listenerPop');
+										}
+								}
 					}
 				})();
 
+				// 订阅事件
 				const historyListenerEventer=(()=>{
 					const listener = observer;
 					return (key)=>{
 							if(key==='listenerPush'){
-										return (callback)=>{
+									return (callback)=>{
 											listener.addListener('listenerPush',callback);
-										}
-							}
+									}
+								}
 							if(key==='listenerPop'){
 									return (callback)=>{
 											listener.addListener('listenerPop',callback);
@@ -68,7 +71,7 @@
 				})
 
 				history.push = historyPulishEventer('pulishPush');
-				history.myBack = historyPulishEventer('pulishPop');
+				history.pop = historyPulishEventer('pulishPop');
 		
 </script>
 </html>

@@ -127,7 +127,7 @@ class Info extends Component {
 		}
 
 		back(){
-			history.myBack();
+			history.pop();
 	}
 }
 

@@ -51,11 +51,11 @@ class Chat extends Component {
 		}
 
 		go(){
-				history.push({state:'info'},'','info')
+				history.push({state:'info'},'信息页','info');
 		}
 
 		back(){
-				history.myBack();
+				history.pop();
 		}
 }
 

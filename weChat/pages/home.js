@@ -74,7 +74,7 @@ class Home extends Component {
 		}
 
 		go(){
-				history.push({state:'chat'},'','chat')
+				history.push({state:'chat'},'聊天页','chat')
 		}
 
 }
