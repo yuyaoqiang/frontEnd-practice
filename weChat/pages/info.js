@@ -132,5 +132,4 @@ class Info extends Component {
 				super.render('in',template);
 		}
 }
-
 export default Info
