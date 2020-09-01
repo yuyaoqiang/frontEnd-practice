@@ -59,7 +59,7 @@ class Chat extends Component {
   }
 
   render(){
-    const template  = this.compile(this.templateHTML,this.state);
+    const template  = super.compile(this.templateHTML,this.state);
     super.render('in',template);
   }
 }

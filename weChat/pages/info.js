@@ -41,9 +41,8 @@ class Info extends Component {
         {{each list  item i}}
           {{if i < 10}}
           <li>
-          <span class="user-icon">
-          <img src="./icon/WechatIMG7.jpeg" alt="" /> </span
-          ><span class="user-name">{{item.userName}}</span>
+          <span class="user-icon"><img src="./icon/WechatIMG7.jpeg" alt="" /> </span>
+          <span class="user-name">{{item.userName}}</span>
           </li>
           {{/if}}
         {{/each}}
@@ -128,7 +127,7 @@ class Info extends Component {
   }
 
   render(){
-    const template  = this.compile(this.templateHTML,this.state);
+    const template  = super.compile(this.templateHTML,this.state);
     super.render('in',template);
   }
 }

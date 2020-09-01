@@ -40,7 +40,7 @@ ul > li {
   background: rgb(77, 170, 73);
 }
 .chat-page {
-  position: fixed;
+  position: absolute;
   display: flex;
   flex-direction: column;
   width: 100%;
