@@ -127,7 +127,12 @@ class Info extends Component {
 		}
 
 		back(){
-			history.pop();
+				history.pop();
+	}
+	
+	render(){
+			const template  = this.compile(this.templateHTML,this.state);
+			super.render('in',template);
 	}
 }
 

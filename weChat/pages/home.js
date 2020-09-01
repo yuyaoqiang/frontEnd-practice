@@ -69,13 +69,15 @@ class Home extends Component {
 								</footer>
 						</div>
 				`;
-				
-				this.compile(this.templateHTML,this.state);
 		}
 
 		go(){
 				history.push({state:'chat'},'聊天页','chat')
 		}
 
+		render(){
+				const template  = this.compile(this.templateHTML,this.state);
+				super.render('in',template);
+		}
 }
 export default Home;

@@ -57,6 +57,11 @@ class Chat extends Component {
 		back(){
 				history.pop();
 		}
+		
+		render(){
+				const template  = this.compile(this.templateHTML,this.state);
+				super.render('in',template);
+		}
 }
 
 export default Chat;

@@ -23,7 +23,7 @@ class Navigation {
 				const { component } = this.config[path];
 				const page = new component('#container');
 				this.stack.push(page);
-				page.render('in');
+				page.render();
 				window.wx = page;
 		}
 

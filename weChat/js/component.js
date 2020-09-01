@@ -3,12 +3,11 @@ class Component {
 		constructor(parent) {
 				this.parent = document.querySelector(parent);
 				this.state = {};
-				this.template = undefined;
 		}
 
 		compile(templateHtml,state) {
 						const render = template.compile(templateHtml);
-						this.template = render(state)
+					 return render(state)
 		}
 
 		destory(animationOut) {
@@ -24,8 +23,8 @@ class Component {
 				}
 		}
 
-		render(animationIn) {
-				let node = docUtils.createDom(this.template);
+		render(animationIn,template) {
+				let node = docUtils.createDom(template);
 				if (animationIn) {
 						const classas = node.getAttribute("class");
 						node.setAttribute("class", `${classas} in-animation`);
