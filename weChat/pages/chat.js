@@ -26,40 +26,40 @@ class Chat extends Component {
     </li>
     <li>{{title}}</li>
     <li class="next" onClick="wx.go()"> <span class="icon iconfont icon-elipsis"></span></li>
-				</ul>
-				</header>
-				<main class="chat-main-wrap chats-info-wrap" id="chat-main-wrap">
-				<ul>
-				{{each list  item i}}
-				<li class="chatRow"> <p class="user-icon"> <img src="./icon/icon.jpeg" alt="">  </p>
-				<p  class="user-msg-wrap"> <span >{{item.name}}</span><span >{{item.msg}}</span></p>
-				</li>
-				{{/each}}
-				</ul>
-				</main>
-				<footer class="info-footer">
-				<ul class="footer-inputer-wrap">
-				<li><span class="icon iconfont icon-yuyin"></span></li>
-				<li><input class="inputer-wrap"/></li>
-				<li	li><span  class="icon iconfont icon-jia "></span></li>
-				<li><span  class="icon iconfont icon-jia"></span></li>
-				</ul>
-				</footer>
-				</div>
+    </ul>
+    </header>
+    <main class="chat-main-wrap chats-info-wrap" id="chat-main-wrap">
+    <ul>
+    {{each list  item i}}
+    <li class="chatRow"> <p class="user-icon"> <img src="./icon/icon.jpeg" alt="">  </p>
+    <p  class="user-msg-wrap"> <span >{{item.name}}</span><span >{{item.msg}}</span></p>
+    </li>
+    {{/each}}
+    </ul>
+    </main>
+    <footer class="info-footer">
+    <ul class="footer-inputer-wrap">
+    <li><span class="icon iconfont icon-yuyin"></span></li>
+    <li><input class="inputer-wrap"/></li>
+    <li	li><span  class="icon iconfont icon-jia "></span></li>
+    <li><span  class="icon iconfont icon-jia"></span></li>
+    </ul>
+    </footer>
+    </div>
 			`
 }
 
-		go(){
-				history.push({state:'info'},'信息页','info');
-		}
+  go(){
+    history.push({state:'info'},'信息页','info');
+  }
 
-		back(){
-				history.pop();
-		}
+  back(){
+    history.pop();
+  }
 
-		render(){
-				const template  = this.compile(this.templateHTML,this.state);
-				super.render('in',template);
-		}
+  render(){
+    const template  = this.compile(this.templateHTML,this.state);
+    super.render('in',template);
+  }
 }
 export default Chat;
