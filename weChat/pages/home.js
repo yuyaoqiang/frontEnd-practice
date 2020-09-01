@@ -79,5 +79,5 @@ class Home extends Component {
 				const template  = this.compile(this.templateHTML,this.state);
 				super.render('in',template);
 		}
-}
+} 
 export default Home;
