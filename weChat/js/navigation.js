@@ -6,7 +6,7 @@ class Navigation {
   this.config = config;
  }
 
-  static	getInstance(config){
+  static getInstance(config){
     if(!this.instance){
       if(!config) throw Error("缺少配置文件");
       this.instance = new Navigation(config);
