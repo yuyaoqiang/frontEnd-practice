@@ -120,19 +120,19 @@ class Info extends Component {
     </main>
   </div>				
   `
-		this._render();
-	}
+  this._render();
+ }
  
-		componentDidMount() {
-				document.getElementById('info-back').addEventListener("click",(e) => navigator.back())
-		}
-		
-		componentWillMount() {
-				console.log('componentWillCount');
-		}
+  componentDidMount() {
+    document.getElementById('info-back').addEventListener("click",(e) => navigator.back())
+  }
+  
+  componentWillMount() {
+    console.log('componentWillCount');
+  }
 
-		render(){
-				return this.templateHTML
-		}
+  render(){
+    return this.templateHTML
+  }
 }
 export default Info

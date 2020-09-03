@@ -44,20 +44,20 @@ class Chat extends Component {
         </footer>
       </div>
       `
-		this._render();
+  this._render();
   }
 
-		componentDidMount() {
-				document.getElementById('chat-back').addEventListener("click",(e) => navigator.back())
-				document.getElementById('chat-go').addEventListener("click",(e) => navigator.go('info'))
-		}
-		
-		componentWillMount() {
-				console.log('componentWillCount');
-		}
-		
-		render(){
-				return this.templateHTML
-		}
+  componentDidMount() {
+    document.getElementById('chat-back').addEventListener("click",(e) => navigator.back())
+    document.getElementById('chat-go').addEventListener("click",(e) => navigator.go('info'))
+  }
+  
+  componentWillMount() {
+    console.log('componentWillCount');
+  }
+  
+  render(){
+    return this.templateHTML
+  }
 }
 export default Chat;
