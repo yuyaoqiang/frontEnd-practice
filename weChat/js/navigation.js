@@ -1,6 +1,6 @@
 import Stack from "./stack.js"
 import navObserver from "./NavigatorObserver.js"
-import {getPath,changePage} from "../util/utils.js"
+import {getPath} from "../util/utils.js"
 class Navigation {
   constructor(config) {
   this.stack = new Stack();

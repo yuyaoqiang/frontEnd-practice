@@ -55,7 +55,7 @@ class Chat extends Component {
 		componentWillMount() {
 				console.log('componentWillCount');
 		}
-
+		
 		render(){
 				return this.templateHTML
 		}
