@@ -1,33 +1,29 @@
 import Component from "../js/component.js"
-import Navigator from "../js/navigation.js";
-import { changePage } from "../util/utils.js";
+import navigator from "../js/navigator.js";
 class Home extends Component {
-  constructor(parent) {
-    super(parent);
-    this.path = 'home';
-    this.title = "微信"
-    this.templateId = "home";
-    this.state = {
-      title: "微信",
-      list:[
-        '这波能反杀',
-        '这波能反杀',
-        '这波能反杀',
-        '这波能反杀',
-        '这波能反杀',
-        '这波能反杀',
-        '这波能反杀',
-        '这波能反杀',
-        '这波能反杀',
-        '这波能反杀',
-        '这波能反杀',
-        '这波能反杀',
-        '这波能反杀',
-        '这波能反杀',
-        '这波能反杀',
-      ]
-    };
-  this.templateHTML=`
+  constructor(parent){
+   super(parent);
+   this.state = {
+     title: "微信",
+     list:[
+       '这波能反杀',
+       '这波能反杀',
+       '这波能反杀',
+       '这波能反杀',
+       '这波能反杀',
+       '这波能反杀',
+       '这波能反杀',
+       '这波能反杀',
+       '这波能反杀',
+       '这波能反杀',
+       '这波能反杀',
+       '这波能反杀',
+       '这波能反杀',
+       '这波能反杀',
+       '这波能反杀',
+     ]
+   };
+   this.templateHTML=`
     <div class="page chat-page" id="home">
       <header>
         <ul class="info-header">
@@ -37,9 +33,9 @@ class Home extends Component {
         </ul>
       </header>
       <main class="chat-main-wrap" id="chat-main-wrap">
-        <ul class="next">
+        <ul id="list">
           {{each list  value i}}
-            <li class="row" onclick="wx.go()">
+            <li class="row"">
               <span class="user-icon"> <img src="./icon/icon.jpeg" alt="" /> </span>
               <span class="user-name">{{value}}{{i}}</span>
             </li>
@@ -67,16 +63,26 @@ class Home extends Component {
         </ul>
       </footer>
     </div>
-    `;
-  }
+  `;
+   this._render();
+ }
 
-  go(){
-    history.push({state:'chat'},'聊天页','chat')
+  componentDidMount() {
+    document.getElementById('list').addEventListener("click",(e)=>{
+      let event = e || window.event;
+      let target = event.target || event.srcElement;
+      if(['li','span'].includes(target.nodeName.toLocaleLowerCase())){
+        navigator.go('chat')
+      }
+    })
+  }
+  
+  componentWillMount() {
+    console.log('componentWillCount');
   }
 
   render(){
-    const template  = super.compile(this.templateHTML,this.state);
-    super.render('in',template);
+    return this.templateHTML
   }
-} 
+}
 export default Home;

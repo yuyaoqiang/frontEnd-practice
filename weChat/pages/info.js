@@ -1,5 +1,5 @@
 import Component from "../js/component.js";
-import Navigator from "../js/navigation.js";
+import navigator from "../js/navigator.js";
 class Info extends Component {
   constructor(parent) {
   super(parent);
@@ -29,7 +29,7 @@ class Info extends Component {
   <div class="page chat-page" id="info">
     <header>
       <ul class="info-header">
-        <li class="before" onClick="wx.back()">
+        <li class="before" id="info-back">
           <span class="icon iconfont icon-zuo"></span>
         </li>
         <li>{{title}}</li>
@@ -120,15 +120,19 @@ class Info extends Component {
     </main>
   </div>				
   `
-  }
+		this._render();
+	}
+ 
+		componentDidMount() {
+				document.getElementById('info-back').addEventListener("click",(e) => navigator.back())
+		}
+		
+		componentWillMount() {
+				console.log('componentWillCount');
+		}
 
-  back(){
-    history.pop();
-  }
-
-  render(){
-    const template  = super.compile(this.templateHTML,this.state);
-    super.render('in',template);
-  }
+		render(){
+				return this.templateHTML
+		}
 }
 export default Info

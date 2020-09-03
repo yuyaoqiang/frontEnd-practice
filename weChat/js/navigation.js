@@ -1,20 +1,14 @@
 import Stack from "./stack.js"
+import navObserver from "./NavigatorObserver.js"
 import {getPath,changePage} from "../util/utils.js"
 class Navigation {
   constructor(config) {
   this.stack = new Stack();
   this.config = config;
  }
-
-  static getInstance(config){
-    if(!this.instance){
-      if(!config) throw Error("缺少配置文件");
-      this.instance = new Navigation(config);
-    }
-    return this.instance;
-  }
   
   init(){
+    this.initListenerEventer();
     const path = getPath();
     this.go(path);
   }
@@ -23,15 +17,10 @@ class Navigation {
     const { component } = this.config[path];
     const page = new component('#container');
     this.stack.push(page);
-    page.render();
-    window.wx = page;
   }
 
   back(){
-    const node = this.stack.pop();
-    const page = this.stack.getStackTop();
-    node.destory('out');
-    window.wx = page;
+    this.stack.pop().destory('out');
   }
 
   isHas(path){
@@ -41,6 +30,58 @@ class Navigation {
       has = index === -1 ? false : true;
     })
     return has;
+  }
+
+  // 路由变化 事件发布
+  historyPulishEventer(){
+    return ()=>{
+      return (key)=>{
+        if(key==='pulishPush'){
+          return function (...args) {
+            const [state,title,path] = args
+            navObserver.publish('listenerPush',path);
+            window.history.pushState(state,title,path);
+          }
+        }
+        if(key==='pulishPop'){
+         return function (...args) {
+            window.history.back(...args);
+            navObserver.publish('listenerPop');
+          }
+        }
+      }
+    }
+  }
+
+  // 订阅事件
+  historyListenerEventer(){
+    return ()=>{
+      return (key)=>{
+        if(key==='listenerPush'){
+          return (callback)=>{
+           navObserver.addListener('listenerPush',callback);
+          }
+        }
+        if(key==='listenerPop'){
+          return (callback)=>{
+           navObserver.addListener('listenerPop',callback);
+          }
+        }
+      }
+    }
+  }
+  
+  initListenerEventer(){
+    window.addGoEventListener = this.historyListenerEventer('listenerPush');
+    window.addBackEventListener = this.historyListenerEventer('listenerPop');
+    window.addGoEventListener((path)=>{
+     this.navigator.go(path);
+    })
+    window.addBackEventListener(()=>{
+      this.navigator.back();
+    })
+    history.push = this.historyPulishEventer('pulishPush');
+    history.pop = this.historyPulishEventer('pulishPop');
   }
 }
 

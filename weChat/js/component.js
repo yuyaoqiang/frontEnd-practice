@@ -2,12 +2,40 @@ import docUtils from "../util/docUtils.js";
 class Component {
   constructor(parent) {
     this.parent = document.querySelector(parent);
-    this.state = {};
   }
 
-  compile(templateHtml,state) {
-      const render = template.compile(templateHtml);
-      return render(state)
+  compile(temp) {
+    this.updateWillMount();
+    const rendered = template.compile(temp)(this.state);
+    this.append('in',rendered);
+    this.updateWillMount();
+  }
+
+		componentDidMount() {
+
+  }
+  
+		componentWillMount() {
+
+  }
+  
+  updateWillMount(pre,next) {
+  
+  }
+
+  updateDidMount(pre,next) {
+
+  }
+
+  setState() {
+
+  }
+
+  _render() {
+    this.componentWillMount && this.componentWillMount();
+    const temp = this.render();
+    this.compile(temp);
+    this.componentDidMount && this.componentDidMount();
   }
 
   destory(animationOut) {
@@ -23,15 +51,15 @@ class Component {
     }
   }
 
-  render(animationIn,template) {
+  append(animation,template) {
     let node = docUtils.createDom(template);
-    if (animationIn) {
+    if (animation) {
       const classas = node.getAttribute("class");
       node.setAttribute("class", `${classas} in-animation`);
       this.parent.appendChild(node);
     } else {
       this.parent.appendChild(node);
-    }
+				}
   }
 }
 

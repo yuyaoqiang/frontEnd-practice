@@ -16,62 +16,8 @@
 
 <script src="./lib/template-web.js"></script>
 <script type="module">
-    import Navigation from "./js/navigation.js";
-    import observer from "./js/observer.js";
-    import config from "./config/config.js";
-    import {getPath} from "./util/utils.js";
-				const navigator =  Navigation.getInstance(config);
-				navigator.init();
-				
-				// 发布事件
-				const historyPulishEventer=(()=>{
-						const publiser = observer;
-						return (key)=>{
-								if(key==='pulishPush'){
-										return function (...args) {
-												const [state,title,path] = args
-												observer.publish('listenerPush',path);
-												window.history.pushState(state,title,path);
-										}
-								}
-								if(key==='pulishPop'){
-									return function (...args) {
-												window.history.back(...args);
-												observer.publish('listenerPop');
-										}
-								}
-					}
-				})();
-
-				// 订阅事件
-				const historyListenerEventer=(()=>{
-					const listener = observer;
-					return (key)=>{
-							if(key==='listenerPush'){
-									return (callback)=>{
-											listener.addListener('listenerPush',callback);
-									}
-								}
-							if(key==='listenerPop'){
-									return (callback)=>{
-											listener.addListener('listenerPop',callback);
-									}
-							}
-					}
-				})();
-		
-				window.addGoEventListener = historyListenerEventer('listenerPush');
-				window.addBackEventListener = historyListenerEventer('listenerPop');
-
-				window.addGoEventListener((path)=>{
-						navigator.go(path);
-				})
-				window.addBackEventListener(()=>{
-						navigator.back();
-				})
-
-				history.push = historyPulishEventer('pulishPush');
-				history.pop = historyPulishEventer('pulishPop');
-		
+    import navigator from "./js/navigator.js";
+    navigator.init();
+  
 </script>
 </html>

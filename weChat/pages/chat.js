@@ -1,12 +1,8 @@
 import Component from "../js/component.js"
-import Navigator from "../js/navigation.js";
-import { changePage } from "../util/utils.js";
+import navigator from "../js/navigator.js";
 class Chat extends Component {
   constructor(parent) {
   super(parent);
-  this.path = 'chat';
-  this.title = "闲聊群"
-  this.templateId="chat";
   this.state = {
     title: "闲聊群",
     list: [
@@ -17,15 +13,15 @@ class Chat extends Component {
     { name: '波老师', msg: '5我是信息我是信息我是信息我是信息我是信息我是信息我是信息我是信息' },
     { name: '波老师', msg: '6我是信息我是信息我是信息我是信息我是信息我是信息我是信息我是信息' },]
   };
-    this.templateHTML=`
+  this.templateHTML=`
       <div class="page chat-page chat-info-page" id="chat">
         <header>
           <ul class="info-header">
-            <li class="before" onClick="wx.back()">
+            <li class="before" id="chat-back">
             <span class="icon iconfont icon-zuo"></span>
             </li>
             <li>{{title}}</li>
-            <li class="next" onClick="wx.go()"> <span class="icon iconfont icon-elipsis"></span></li>
+            <li class="next" id="chat-go"> <span class="icon iconfont icon-elipsis"></span></li>
           </ul>
         </header>
         <main class="chat-main-wrap chats-info-wrap" id="chat-main-wrap">
@@ -48,19 +44,20 @@ class Chat extends Component {
         </footer>
       </div>
       `
-}
-
-  go(){
-    history.push({state:'info'},'信息页','info');
+		this._render();
   }
 
-  back(){
-    history.pop();
-  }
+		componentDidMount() {
+				document.getElementById('chat-back').addEventListener("click",(e) => navigator.back())
+				document.getElementById('chat-go').addEventListener("click",(e) => navigator.go('info'))
+		}
+		
+		componentWillMount() {
+				console.log('componentWillCount');
+		}
 
-  render(){
-    const template  = super.compile(this.templateHTML,this.state);
-    super.render('in',template);
-  }
+		render(){
+				return this.templateHTML
+		}
 }
 export default Chat;

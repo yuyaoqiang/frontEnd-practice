@@ -2,10 +2,6 @@
 class Observer {
   constructor() {
     this.messageMap = {};
-    if (!Observer.instance) {
-      Observer.instance = this;
-    }
-    return Observer.instance
   }
 
   addListener(message, subscribe) {
@@ -24,5 +20,4 @@ class Observer {
     subscribes.forEach((subscribe) => subscribe(info));
   }
 }
-const observer = new Observer();
-export default observer;
+export default Observer;
