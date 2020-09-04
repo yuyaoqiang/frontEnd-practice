@@ -1,5 +1,5 @@
 import Stack from "./stack.js"
-import navObserver from "./NavigatorObserver.js"
+import navObserver from "./navigatorObserver.js"
 import {getPath} from "../util/utils.js"
 class Navigation {
   constructor(config) {
@@ -17,10 +17,12 @@ class Navigation {
     const { component } = this.config[path];
     const page = new component('#container');
     this.stack.push(page);
+    history.pushState('','',path)
   }
 
   back(){
     this.stack.pop().destory('out');
+    history.back();
   }
 
   isHas(path){
@@ -44,7 +46,7 @@ class Navigation {
           }
         }
         if(key==='pulishPop'){
-         return function (...args) {
+          return function (...args) {
             window.history.back(...args);
             navObserver.publish('listenerPop');
           }
@@ -59,12 +61,12 @@ class Navigation {
       return (key)=>{
         if(key==='listenerPush'){
           return (callback)=>{
-           navObserver.addListener('listenerPush',callback);
+            navObserver.addListener('listenerPush',callback);
           }
         }
         if(key==='listenerPop'){
           return (callback)=>{
-           navObserver.addListener('listenerPop',callback);
+            navObserver.addListener('listenerPop',callback);
           }
         }
       }
@@ -75,13 +77,13 @@ class Navigation {
     window.addGoEventListener = this.historyListenerEventer('listenerPush');
     window.addBackEventListener = this.historyListenerEventer('listenerPop');
     window.addGoEventListener((path)=>{
-     this.navigator.go(path);
+      this.navigator.go(path);
     })
     window.addBackEventListener(()=>{
       this.navigator.back();
     })
-    history.push = this.historyPulishEventer('pulishPush');
-    history.pop = this.historyPulishEventer('pulishPop');
+    history.push = this.historyPulishEventer('pulishPush')();
+    history.pop = this.historyPulishEventer('pulishPop')();
   }
 }
 

@@ -5,11 +5,13 @@ class docUtils {
     let doc = parser.parseFromString(templateStr, "text/html");
     let dom = doc.querySelector(".page");
     return dom;
-  }
+		}
+		
   // 获取子元素中最后一个DOM
   static queryLastChild(parent){
     return parent.lastElementChild;
-  }
+		}
+		
   // 查询DOM
   static query(id) {
     return document.getElementById(id) || false;

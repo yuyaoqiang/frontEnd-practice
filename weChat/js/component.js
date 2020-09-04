@@ -1,14 +1,17 @@
 import docUtils from "../util/docUtils.js";
 class Component {
   constructor(parent) {
-    this.parent = document.querySelector(parent);
+				this.parent = document.querySelector(parent);
+				this.pre = null;
+    this.next = null;
   }
 
-  compile(temp) {
-    this.updateWillMount();
-    const rendered = template.compile(temp)(this.state);
+  compile() {
+    this.componentWillMount && this.componentWillMount();
+    const tempateHTML = this.render();
+    const rendered = template.compile(tempateHTML)(this.state);
     this.append('in',rendered);
-    this.updateWillMount();
+    this.componentDidMount && this.componentDidMount();
   }
 
 		componentDidMount() {
@@ -19,11 +22,11 @@ class Component {
 
   }
   
-  updateWillMount(pre,next) {
+  componentWillUpdate(pre,next) {
   
   }
 
-  updateDidMount(pre,next) {
+  componentDidUpdate(pre,next) {
 
   }
 
@@ -31,11 +34,14 @@ class Component {
 
   }
 
-  _render() {
-    this.componentWillMount && this.componentWillMount();
-    const temp = this.render();
-    this.compile(temp);
-    this.componentDidMount && this.componentDidMount();
+  render() {}
+
+  update() {
+    this.componentWillUpdate && this.componentWillUpdate(this.pre,this.next);
+    const tempateHTML = this.render();
+    const rendered = template.compile(tempateHTML)(this.state);
+    this.append('in',rendered);
+    this.componentDidUpdate && this.componentDidUpdate(this.pre,this.next);
   }
 
   destory(animationOut) {

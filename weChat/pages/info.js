@@ -3,9 +3,6 @@ import navigator from "../js/navigator.js";
 class Info extends Component {
   constructor(parent) {
   super(parent);
-  this.path = 'info';
-  this.title = "聊天信息(345)"
-  this.templateId="info";
   this.state = {
     title: "聊天信息(345)",
     list:[
@@ -120,15 +117,16 @@ class Info extends Component {
     </main>
   </div>				
   `
-  this._render();
+  this.compile();
  }
  
   componentDidMount() {
+    console.log('info - componentDidMount');
     document.getElementById('info-back').addEventListener("click",(e) => navigator.back())
   }
   
   componentWillMount() {
-    console.log('componentWillCount');
+    console.log('info - componentWillCount');
   }
 
   render(){
