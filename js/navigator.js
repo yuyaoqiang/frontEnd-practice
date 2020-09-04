@@ -3,7 +3,6 @@ import Chat from "../pages/chat.js"
 import Info from "../pages/info.js"
 import Navigation from "./navigation.js"
 const navigator = {
-
   home: {
     path: 'home',
     title: '微信',

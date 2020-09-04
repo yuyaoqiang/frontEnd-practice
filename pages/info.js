@@ -22,7 +22,7 @@ class Info extends Component {
       {userName:'不知非攻'},
     ]
   };
-  this.templateHTML=`
+  this.templateHTML = `
   <div class="page chat-page" id="info">
     <header>
       <ul class="info-header">
@@ -129,7 +129,7 @@ class Info extends Component {
     console.log('info - componentWillCount');
   }
 
-  render(){
+  render() {
     return this.templateHTML
   }
 }
