@@ -1,8 +1,8 @@
 import docUtils from "../util/docUtils.js";
 class Component {
   constructor(parent) {
-				this.parent = document.querySelector(parent);
-				this.pre = null;
+        this.parent = document.querySelector(parent);
+        this.pre = null;
     this.next = null;
   }
 
@@ -14,11 +14,11 @@ class Component {
     this.componentDidMount && this.componentDidMount();
   }
 
-		componentDidMount() {
+    componentDidMount() {
 
   }
   
-		componentWillMount() {
+    componentWillMount() {
 
   }
   
@@ -65,7 +65,7 @@ class Component {
       this.parent.appendChild(node);
     } else {
       this.parent.appendChild(node);
-				}
+        }
   }
 }
 
